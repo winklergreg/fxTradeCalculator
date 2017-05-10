@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.control.cell.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.collections.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="635.0" prefWidth="825.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FxTradeCalc.TradeCalcController">
+    <children>
+        <MenuBar fx:id="menu" prefHeight="25.0" prefWidth="823.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+            <menus>
+                <Menu fx:id="fileMenu" text="File">
+                    <items>
+                        <MenuItem fx:id="defaultOptions" text="Default Options" />
+                    </items>
+                    <items>
+                        <MenuItem fx:id="exitApp" text="Exit" />
+                    </items>
+                </Menu>
+                <Menu fx:id="helpMenu" text="Help">
+                    <items>
+                        <MenuItem fx:id="aboutFile" text="About" />
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+        <Label layoutX="32.0" layoutY="38.0" text="Customer FX Pricing Calculator" underline="true">
+            <font>
+                <Font name="System Bold" size="19.0" />
+            </font>
+        </Label>
+        <RadioButton fx:id="rbSpot" layoutX="43.0" layoutY="104.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="54.0" selected="true" text="Spot">
+            <toggleGroup>
+                <ToggleGroup fx:id="SpotForward" />
+            </toggleGroup></RadioButton>
+        <RadioButton fx:id="rbFwd" layoutX="106.0" layoutY="104.0" mnemonicParsing="false" text="Forward" toggleGroup="$SpotForward" />
+        <RadioButton fx:id="rbBuy" layoutX="43.0" layoutY="147.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="54.0" selected="true" text="Buy">
+            <toggleGroup>
+                <ToggleGroup fx:id="BuySell" />
+            </toggleGroup></RadioButton>
+        <RadioButton fx:id="rbSell" layoutX="106.0" layoutY="147.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="64.0" text="Sell" toggleGroup="$BuySell" />
+        <TextField fx:id="txtXCCY" layoutX="43.0" layoutY="190.0" prefHeight="25.0" prefWidth="166.0" promptText="Enter XCCY (ex EURUSD)" />
+        <Label layoutX="43.0" layoutY="233.0" text="Solve for:" underline="true">
+            <font>
+                <Font name="System Bold" size="12.0" />
+            </font>
+        </Label>
+        <RadioButton fx:id="rbRefCCY" layoutX="107.0" layoutY="233.0" mnemonicParsing="false" text="Ref Currency">
+            <toggleGroup>
+                <ToggleGroup fx:id="SolveForCurrency" />
+            </toggleGroup>
+        </RadioButton>
+        <RadioButton fx:id="rbBaseCCY" layoutX="228.0" layoutY="233.0" mnemonicParsing="false" selected="true" text="Base Currency" toggleGroup="$SolveForCurrency" />
+        <TextField fx:id="txtAmount" layoutX="106.0" layoutY="268.0" prefHeight="25.0" prefWidth="222.0" promptText="Amount" />
+        <TableView fx:id="tblSpreads" editable="true" layoutX="27.0" layoutY="335.0" prefHeight="194.0" prefWidth="334.0">
+            <columns>
+                <TableColumn fx:id="spreadColumn" editable="true" prefWidth="60.0" text="Spread">
+                    <cellValueFactory><PropertyValueFactory property="spotSpread" />
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn fx:id="spotRateColumn" prefWidth="75.0" text="Spot Rate">
+                    <cellValueFactory><PropertyValueFactory property="spotFxRate" />
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn fx:id="spotAmountColumn" prefWidth="109.0" text="Currency Amount">
+                    <cellValueFactory><PropertyValueFactory property="spotAmount" />
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn fx:id="spotRevenueColumn" prefWidth="87.0" text="USD Revenue">
+                    <cellValueFactory><PropertyValueFactory property="spotRevenue" />
+                    </cellValueFactory>
+                </TableColumn>
+            </columns>
+            <items>
+                <FXCollections fx:factory="observableArrayList">
+                </FXCollections>
+            </items>
+            <sortOrder>
+                <fx:reference source="spreadColumn" />
+            </sortOrder>
+        </TableView>
+        <TableView fx:id="tblForwards" layoutX="371.0" layoutY="335.0" prefHeight="194.0" prefWidth="441.0">
+            <columns>
+                <TableColumn fx:id="forwardDateColumn" prefWidth="101.0" text="Forward Dates">
+                    <cellValueFactory><PropertyValueFactory property="forwardDate" />
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn fx:id="forwardPointsColumn" prefWidth="56.0" text="Fwd Pts">
+                    <cellValueFactory><PropertyValueFactory property="forwardPoints" />
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn fx:id="forwardRateColumn" prefWidth="81.0" text="Fwd Rate">
+                    <cellValueFactory><PropertyValueFactory property="forwardRate" />
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn fx:id="forwardAmountColumn" prefWidth="107.0" text="Currency Amount">
+                    <cellValueFactory><PropertyValueFactory property="forwardAmount" />
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn fx:id="forwardRevenueColumn" prefWidth="93.0" text="USD Revenue">
+                    <cellValueFactory><PropertyValueFactory property="forwardRevenue" />
+                    </cellValueFactory>
+                </TableColumn>
+            </columns>
+            <items>
+                <FXCollections fx:factory="observableArrayList">
+                </FXCollections>
+            </items>
+            <sortOrder>
+                <fx:reference source="forwardDateColumn" />
+            </sortOrder>
+        </TableView>
+        <LineChart fx:id="chartHistory" animated="false" createSymbols="false" horizontalGridLinesVisible="false" layoutX="333.0" layoutY="70.0" legendVisible="false" prefHeight="260.0" prefWidth="477.0" title="Historical Charting" verticalGridLinesVisible="false">
+            <xAxis>
+                <CategoryAxis side="BOTTOM" fx:id="xAxis" />
+            </xAxis>
+            <yAxis>
+                <NumberAxis fx:id="yAxis" side="LEFT" />
+            </yAxis>
+        </LineChart>
+        <Label fx:id="lblCurrency" alignment="CENTER_RIGHT" layoutX="43.0" layoutY="272.0" prefHeight="17.0" prefWidth="54.0">
+            <font>
+                <Font name="System Bold" size="12.0" />
+            </font>
+        </Label>
+        <Label layoutX="385.0" layoutY="540.0" text="Forward Spread: " />
+        <TextField fx:id="txtCustomSpotSpread" layoutX="34.0" layoutY="536.0" promptText="Input Custom FX Spread" />
+        <TextField fx:id="txtCustomFxRate" layoutX="206.0" layoutY="536.0" prefHeight="25.0" prefWidth="149.0" promptText="Input Custom FX Rate" />
+        <TextField fx:id="txtForwardSpread" layoutX="483.0" layoutY="536.0" prefHeight="25.0" prefWidth="89.0" promptText="Enter Spread" />
+        <DatePicker fx:id="cdrForwardDate" layoutX="612.0" layoutY="536.0" prefHeight="25.0" prefWidth="166.0" promptText="Forward Date" />
+        <Label layoutX="219.0" layoutY="194.0" prefHeight="17.0" prefWidth="123.0" textFill="#f50202" fx:id="xccyError">
+            <font>
+                <Font name="System Bold" size="12.0" />
+            </font>
+        </Label>
+        <Label fx:id="spotValueDate" layoutX="107.0" layoutY="307.0" prefHeight="17.0" prefWidth="166.0" text="Spot Value Date: " />
+        <ComboBox fx:id="cbChartType" layoutX="662.0" layoutY="52.0" prefWidth="150.0" promptText="Select Chart Type">
+            <items>
+                <FXCollections fx:factory="observableArrayList">
+                </FXCollections>
+            </items>
+        </ComboBox>
+        <Button fx:id="btnGetRates" layoutX="95.0" layoutY="586.0" mnemonicParsing="false" onAction="#handleGetRates" prefHeight="25.0" prefWidth="199.0" text="Update Rates" />
+        <Button fx:id="btnReset" layoutX="463.0" layoutY="586.0" mnemonicParsing="false" onAction="#handleReset" prefHeight="25.0" prefWidth="199.0" text="Reset" />
+
+    </children>
+</AnchorPane>

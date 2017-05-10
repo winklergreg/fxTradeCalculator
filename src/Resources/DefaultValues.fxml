@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FxTradeCalc.DefaultValuesController">
+    <children>
+        <Label layoutX="53.0" layoutY="59.0" text="Home Currency Code" />
+        <TextField fx:id="txtDefaultHomeCurrency" layoutX="226.0" layoutY="55.0" promptText="Enter 3 digit code" />
+        <Label layoutX="53.0" layoutY="144.0" text="Spot Spread Table Data" underline="true" />
+        <Label layoutX="70.0" layoutY="177.0" text="Spread Increment Size" />
+        <Label layoutX="70.0" layoutY="205.0" text="Max Spread" />
+        <TextField fx:id="txtDefaultIncrement" layoutX="226.0" layoutY="173.0" />
+        <TextField fx:id="txtDefaultMaxIncrement" layoutX="226.0" layoutY="201.0" />
+        <Label layoutX="53.0" layoutY="100.0" text="Chart Display Interval" />
+        <ComboBox fx:id="cbDefaultChartInterval" layoutX="226.0" layoutY="96.0" prefWidth="150.0" />
+        <Button fx:id="btnAcceptChanges" layoutX="116.0" layoutY="271.0" mnemonicParsing="false" onAction="#handleAcceptChanges" text="Accept Changes" />
+        <Button fx:id="btnCancel" layoutX="275.0" layoutY="271.0" mnemonicParsing="false" onAction="#handleCancel" text="Cancel" />
+    </children>
+</AnchorPane>
